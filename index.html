@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Estfor Kingdom Data</title>
+  <style>
+body {
+  background-color: #121212;
+  color: #ffffff;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.result {
+  background-color: #1f1f1f;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
+.result p {
+  margin: 10px 0;
+}
+
+.result .title {
+  font-weight: bold;
+  color: #ff9800; /* Title color */
+}
+
+.result .title:before {
+  content: ''; /* To add a space before the colon */
+}
+
+.result .data {
+  border-top: 1px solid #333;
+  padding-top: 10px;
+  margin-top: 20px;
+  color: #ffffff; /* Data color */
+}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="result" id="result-container">
+        <script src="data.js"></script>
+    </div>
+  </div>
+</body>
+</html>
