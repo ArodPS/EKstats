@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
               const totalDonatedWei = parseFloat(globalDonationStats.totalDonatedAmount);
               const totalDonatedEther = totalDonatedWei / Math.pow(10, 18);
-              const totalDonatedEtherNoFF = totalDonatedEther - 354000;
+              const totalDonatedEtherNoFF = totalDonatedEther - 454000;
 
               const numUsersDonated = parseFloat(globalDonationStats.numUsersDonated);
               const numUsersDonatedNoFF = numUsersDonated - 1;
@@ -106,7 +106,7 @@ document.addEventListener("DOMContentLoaded", function () {
             <p><span class="title">Total Donated:</span> ${totalDonatedEther.toLocaleString()} BRUSH</p>
             <p><span class="title">Number of Users Donated:</span> ${numUsersDonated.toLocaleString()}</p>
             <p><span class="title">Average Donated per User:</span> ${totalDonatedPerUserEther.toLocaleString()} BRUSH</p>
-            <p><span class="title">Average Donated per User minus FF:</span> ${totalDonatedPerUserEtherNoFF.toLocaleString()} BRUSH</p>
+            <p><span class="title">Average Donated per User minus large donations:</span> ${totalDonatedPerUserEtherNoFF.toLocaleString()} BRUSH</p>
           `;
 
                   fetch(collectionsURL)
