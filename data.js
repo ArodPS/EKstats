@@ -94,7 +94,6 @@ document.addEventListener("DOMContentLoaded", function () {
                   console.log('Price Response:', priceResponse);
 
                   const brushPriceUSD = priceResponse['paint-swap'] ? priceResponse['paint-swap'].usd : 'N/A';
-                  const revenuePerUserUSD = revenuePerUserEther * brushPriceUSD;
                   const totalGeneratedUsd = totalBrushBurnedEther * brushPriceUSD;
 
                   const resultContainer = document.getElementById('result-container');
@@ -108,8 +107,6 @@ document.addEventListener("DOMContentLoaded", function () {
             <p><span class="title">Number of Users Donated:</span> ${numUsersDonated.toLocaleString()}</p>
             <p><span class="title">Average Donated per User:</span> ${totalDonatedPerUserEther.toLocaleString()} BRUSH</p>
             <p><span class="title">Average Donated per User minus FF:</span> ${totalDonatedPerUserEtherNoFF.toLocaleString()} BRUSH</p>
-            <p><span class="title">Revenue per User:</span> ${revenuePerUserEther.toLocaleString()} BRUSH ($${revenuePerUserUSD.toLocaleString()})</p>
-            <p><span class="title">Revenue generated USD:</span> $${totalGeneratedUsd.toLocaleString()}</p>
           `;
 
                   fetch(collectionsURL)
@@ -130,6 +127,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         .then(priceResponse => {
                           const ftmPriceUSD = priceResponse['fantom'] ? priceResponse['fantom'].usd : 'N/A';
                           let totalRoyaltiesUSD = 0;
+
                           collectionIDs.forEach(collectionID => {
                             const collection = collections.find(item => item.id === collectionID);
                             if (collection) {
@@ -137,10 +135,12 @@ document.addEventListener("DOMContentLoaded", function () {
                               const totalVolumeFantom = totalVolumeWei / Math.pow(10, 18);
                               const onePercentFantom = totalVolumeFantom * 0.01;
                               const onePercentUSD = onePercentFantom * ftmPriceUSD;
+                          
+                              // Add the current royalty to the total
                               totalRoyaltiesUSD += parseFloat(onePercentUSD.toFixed(2));
+                          
                               const collectionInfo = document.createElement('p');
                               collectionInfo.innerHTML = `<span class="title">Royalties:</span> ${onePercentFantom.toFixed(4)} FTM ($${onePercentUSD.toFixed(2)})`;
-
                               resultContainer.appendChild(collectionInfo);
                             } else {
                               const collectionInfo = document.createElement('p');
@@ -148,11 +148,28 @@ document.addEventListener("DOMContentLoaded", function () {
                               resultContainer.appendChild(collectionInfo);
                             }
                           });
+                          
                           // Add the combined USD value to the result container
                           const combinedUSDInfo = document.createElement('p');
                           combinedUSDInfo.innerHTML = `<span class="title">Combined USD Revenue total:</span> $${(totalGeneratedUsd + totalRoyaltiesUSD).toFixed(2)}`;
                           resultContainer.appendChild(combinedUSDInfo);
+
+                        // Calculate the revenue per user in USD (excluding royalties)
+                        const revenuePerUserEtherUSD = revenuePerUserEther * brushPriceUSD;
+
+                        // Calculate the total revenue per user (including royalties)
+                        const totalRevenuePerUserUSD = revenuePerUserEtherUSD + totalRoyaltiesUSD / totalPlayers;
+
+                        // Create the display element for total revenue per user
+                        const totalRevenuePerUserUSDInfo = document.createElement('p');
+                        totalRevenuePerUserUSDInfo.innerHTML = `<span class="title">Revenue Per User USD:</span> $${totalRevenuePerUserUSD.toFixed(6)}`;
+                        resultContainer.appendChild(totalRevenuePerUserUSDInfo);
+
                         })
+
+
+
+                        
                         .catch(priceError => {
                           console.error('FTM Price Fetch Error:', priceError);
                         });
