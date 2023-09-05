@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
               const totalDonatedWei = parseFloat(globalDonationStats.totalDonatedAmount);
               const totalDonatedEther = totalDonatedWei / Math.pow(10, 18);
-              const totalDonatedEtherNoFF = totalDonatedEther - 454000;
+              const totalDonatedEtherNoFF = totalDonatedEther - 696000;
 
               const numUsersDonated = parseFloat(globalDonationStats.numUsersDonated);
               const numUsersDonatedNoFF = numUsersDonated - 1;
